@@ -83,5 +83,20 @@ post '/details/:post_id' do
 	#poluchaem peremennuyou iz post zaprosa
 	content = params[:content]
 
-	erb "viv vveli coment #{content} for post #{post_id}"
+	# sohranenie dannih v BD #kod iz sqlite,kotory vstavlyaet text komenta k postu & datu(data avtomatom)
+	@db.execute 'insert into Comments
+		(
+			content, 
+			created_date,
+			post_id
+		)
+			values
+		(
+			?,
+			datetime(),
+			?
+		)', [content, post_id] 
+
+	#perenapravlenie na stranicu posta
+	redirect to('/details/' + post_id)
 end
