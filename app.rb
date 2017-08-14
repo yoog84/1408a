@@ -4,17 +4,20 @@ require 'sinatra'
 require 'sinatra/reloader'
 require 'sqlite3'
 
-def init_db 
-	@db = SQLite3::Database.new 'leprosorium.db'
-	@db.results_as_hash = true
+def init_db #inicializiruem globaln peremen
+	@db = SQLite3::Database.new 'leprosorium.db' # v module sqlite suchestvuet class Database, v kotorom est metod .new,kotory prinimaet parametr leprosorium.db
+	@db.results_as_hash = true #rezultaty vozvrashayoutsya v vide hash ,a ne v vide massiva(udobnee k nim obrashatsya)(stroka neobyazatelna)
 end
 
+#before vizivaetsya kagdy raz pri perezagruzke lyouboy stranicy
 before do
 	init_db
 end
 
-configure do
+#sozdanie tablicy v BD dlya postov
+configure do #metod configuracii vizivaetsya kagdy raz pri inicializacii prilogeniya(pri izmenenii file(kod programmy) ili,& obnovlenii stranicy)
 	init_db
+	#vstavlyaem kod sozdanoy v programme sqlite3, obyazatelno vstavlyaem 'IF NOT EXISTS' dlya togo,chtoby tabl ne peresozdavalas zanovo
 	@db.execute 'CREATE TABLE IF NOT EXISTS Posts
 	(  
     	id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -27,17 +30,19 @@ get '/' do
 	erb "Hello! <a href=\"https://github.com/bootstrap-ruby/sinatra-bootstrap\">Original</a> pattern has been modified for <a href=\"http://rubyschool.us/\">Ruby School</a>"			
 end
 
+#obrabotchik get zaprosa /new(brauzer poluchaet stranicu s servera)
 get '/new' do
-  erb :new
+  erb :new #podgrugaem file new.erb
 end
 
-post '/new' do
-	content = params[:content]
+post '/new' do #obrabotchik post zaprosa /new(brauzer otpravlyaet dannie na server)
+	content = params[:content] #poluchaem peremennuyou iz post zaprosa
 
-	if content.length <= 0
-		@error = 'Vvedite text v post'
-		return erb :new
-	end
+#proverka parametrov (vvel li chto to polzovatel v okno komenta)
+if content.length <= 0
+	@error = 'Vvedite text v post'
+	return erb :new
+end
 
 	erb "vi vvely #{content}"
 end
