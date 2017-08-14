@@ -52,3 +52,11 @@ post '/new' do #obrabotchik post zaprosa /new(brauzer otpravlyaet dannie na serv
 	#perenapravlenie na glavnuyou stranicu
 	redirect to '/'
 end
+
+#vivod informacii o poste
+get '/details/:post_id' do
+	#delaem obrabotchik individualnogo url dlya kagdogo posta(poluchaem peremennuyou iz url)
+	post_id = params[:post_id]
+	
+	erb "pokazana iformaciya dlya posta s id #{post_id}"
+end
