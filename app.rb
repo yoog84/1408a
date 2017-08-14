@@ -34,5 +34,10 @@ end
 post '/new' do
 	content = params[:content]
 
+	if content.length <= 0
+		@error = 'Vvedite text v post'
+		return erb :new
+	end
+
 	erb "vi vvely #{content}"
 end
