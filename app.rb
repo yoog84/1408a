@@ -70,7 +70,11 @@ get '/details/:post_id' do
 	#poluchaem spisok postov(u nas budet tolko odin post)(vibiraem iz BD vse posty s id, kotory ukazan v url)
 	results = @db.execute 'select * from Posts where id = ?', [post_id]
 	#vibiraem etot odin post v peremennuyou @row
-	@row = results[0] 
+	@row = results[0]
+
+	# vibiraem kommentarii dlya nashego posta
+	@comments = @db.execute 'select * from Comments where post_id = ? order by id', [post_id]
+
 #vozvrashaem predstavlenie(view) details.erb
 	erb :details
 end
