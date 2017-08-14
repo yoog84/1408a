@@ -27,6 +27,8 @@ configure do #metod configuracii vizivaetsya kagdy raz pri inicializacii priloge
 end
 
 get '/' do
+	#vivod spiska postov na ekran iz bd #select * from Posts (order by id desc) - kod izsqlite3 (vivodit dannie iz bd naoborot)
+	@results = @db.execute 'select * from Posts order by id desc' 
 	erb :index
 end
 
