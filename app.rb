@@ -27,7 +27,7 @@ configure do #metod configuracii vizivaetsya kagdy raz pri inicializacii priloge
 end
 
 get '/' do
-	erb "Hello! <a href=\"https://github.com/bootstrap-ruby/sinatra-bootstrap\">Original</a> pattern has been modified for <a href=\"http://rubyschool.us/\">Ruby School</a>"			
+	erb :index
 end
 
 #obrabotchik get zaprosa /new(brauzer poluchaet stranicu s servera)
