@@ -49,5 +49,6 @@ post '/new' do #obrabotchik post zaprosa /new(brauzer otpravlyaet dannie na serv
 	#sohranenie dannih v BD #kod iz sqlite,kotory vstavlyaet text posta & datu(data avtomatom)
 	@db.execute 'insert into Posts (content, created_date) values (?, datetime())', [content]
 
-		erb "vi vvely #{content}"
-	end
+	#perenapravlenie na glavnuyou stranicu
+	redirect to '/'
+end
