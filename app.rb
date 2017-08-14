@@ -38,11 +38,14 @@ end
 post '/new' do #obrabotchik post zaprosa /new(brauzer otpravlyaet dannie na server)
 	content = params[:content] #poluchaem peremennuyou iz post zaprosa
 
-#proverka parametrov (vvel li chto to polzovatel v okno komenta)
-if content.length <= 0
-	@error = 'Vvedite text v post'
-	return erb :new
-end
+	#proverka parametrov (vvel li chto to polzovatel v okno komenta)
+	if content.length <= 0
+		@error = 'Vvedite text v post'
+		return erb :new
+	end
 
-	erb "vi vvely #{content}"
-end
+	#sohranenie dannih v BD #kod iz sqlite,kotory vstavlyaet text posta & datu(data avtomatom)
+	@db.execute 'insert into Posts (content, created_date) values (?, datetime())', [content]
+
+		erb "vi vvely #{content}"
+	end
