@@ -24,6 +24,15 @@ configure do #metod configuracii vizivaetsya kagdy raz pri inicializacii priloge
     	created_date DATE,
    		content TEXT
    	)'
+
+	#sozdanie tablicy v BD dlya comentariev
+	@db.execute 'CREATE TABLE IF NOT EXISTS comments
+	(  
+    	id INTEGER PRIMARY KEY AUTOINCREMENT,
+    	created_date DATE,
+   		content TEXT,
+   		post_id INTEGER
+   	)'
 end
 
 get '/' do
